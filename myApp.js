@@ -74,10 +74,25 @@ const findPersonById = (personId, done) => {
   });
 };
 
+/** 8) Find edit than save */
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  /** .findById() method to find a person by _id with the parameter personId as search key*/
+  Person.findById(personId, (err, Person) => {
+    if(err)
+      return console.log(err);
+
+  /** Array.push() method to add "hambuerger" to the list of the person's favoriteFoods */
+  Person.favoriteFoods.push(foodToAdd);
+  
+  /** and inside the find callback - save() the updated Person */
+  Person.save((err, updatePerson) => {
+    if(err)
+      return console.log(err);
+      done(null, updatePerson);
+  });
+});
 };
 
 const findAndUpdate = (personName, done) => {
