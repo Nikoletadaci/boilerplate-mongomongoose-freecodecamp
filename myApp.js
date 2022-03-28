@@ -85,7 +85,7 @@ const findEditThenSave = (personId, done) => {
 
   /** Array.push() method to add "hambuerger" to the list of the person's favoriteFoods */
   Person.favoriteFoods.push(foodToAdd);
-  
+
   /** and inside the find callback - save() the updated Person */
   Person.save((err, updatePerson) => {
     if(err)
@@ -95,10 +95,14 @@ const findEditThenSave = (personId, done) => {
 });
 };
 
+/** Find and Update */
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-
-  done(null /*, data*/);
+  Person.findOneAndUpdate({name: personName}, {age: ageToSet}, { new: true }, (err, updatedDoc) => {
+    if(err)
+      return console.log(err);
+      done(null, updatedDoc);
+  });
 };
 
 const removeById = (personId, done) => {
